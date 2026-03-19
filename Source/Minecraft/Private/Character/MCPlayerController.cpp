@@ -5,7 +5,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Character/MCCharacter.h"
-#include "Interfaces/BlockHighlight.h"
+#include "Interfaces/Block.h"
 #include "Blocks/BlockBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "Camera/CameraComponent.h"
@@ -99,7 +99,7 @@ void AMCPlayerController::OnRightClick()
 	// 执行射线检测
 	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility))
 	{
-		if (!Hit.GetActor()->Implements<UBlockHighlight>()) return;
+		if (!Hit.GetActor()->Implements<UBlock>()) return;
 		// 1. 获取被点击方块的中心位置
 		FVector TargetBlockLoc = Hit.GetActor()->GetActorLocation();
 
@@ -141,7 +141,7 @@ void AMCPlayerController::OnLeftClick()
 	// 执行射线检测
 	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility))
 	{
-		if (!Hit.GetActor()->Implements<UBlockHighlight>()) return;
+		if (!Hit.GetActor()->Implements<UBlock>()) return;
 		AActor* BlockToBreak = Hit.GetActor();
 		BlockToBreak->Destroy();
 	}
@@ -238,7 +238,7 @@ void AMCPlayerController::OnMiddleClick()
 	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility))
 	{
 		AActor* BlockToChange = Hit.GetActor();
-		if (!BlockToChange->Implements<UBlockHighlight>()) return;
+		if (!BlockToChange->Implements<UBlock>()) return;
 		if (BlockToPlace = Cast<ABlockBase>(BlockToChange)->GetClass())
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Selected Block: %s"), *BlockToPlace->GetName()));
@@ -329,7 +329,7 @@ ABlockBase* AMCPlayerController::GetTargetBlockUnderCursor()
 
 	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility))
 	{
-		if (Hit.GetActor()->Implements<UBlockHighlight>())
+		if (Hit.GetActor()->Implements<UBlock>())
 		{
 			return Cast<ABlockBase>(Hit.GetActor());
 		}

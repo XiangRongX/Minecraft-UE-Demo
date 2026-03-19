@@ -7,7 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraComponent.h"
 #include "Materials/MaterialInterface.h"
-#include "Blocks/Sand.h"
+#include "Blocks/FallingBlock.h"
 
 ABlockBase::ABlockBase()
 {
@@ -132,10 +132,10 @@ void ABlockBase::NotifyBlocksToFall()
 	if (GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECC_Visibility))
 	{
 		// 如果上方是沙子，触发它的检查
-		ASand* FallingSand = Cast<ASand>(Hit.GetActor());
-		if (FallingSand)
+		AFallingBlock* FallingBlock = Cast<AFallingBlock>(Hit.GetActor());
+		if (FallingBlock)
 		{
-			FallingSand->CheckGravity(this);
+			FallingBlock->CheckGravity(this);
 		}
 	}
 }

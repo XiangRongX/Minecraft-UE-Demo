@@ -33,7 +33,7 @@ void AMCCharacter::UpdateBlockHighlight()
 
 	ThisFrameHighlightedBlock = nullptr;
 	bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility);
-	if (!bHit || !Hit.GetActor()->Implements<UBlockHighlight>())
+	if (!bHit || !Hit.GetActor()->Implements<UBlock>())
 	{
 		// 如果没有击中任何物体，则直接返回
 		if (LastFrameHighlightedBlock)

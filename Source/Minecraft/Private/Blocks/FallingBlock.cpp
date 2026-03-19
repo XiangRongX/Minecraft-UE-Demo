@@ -1,19 +1,19 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Blocks/Sand.h"
+#include "Blocks/FallingBlock.h"
 
-ASand::ASand()
+AFallingBlock::AFallingBlock()
 {
     PrimaryActorTick.bCanEverTick = true;
     PrimaryActorTick.bStartWithTickEnabled = false;
 }
 
-void ASand::Tick(float DeltaTime)
+void AFallingBlock::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 
-    if (CurrentState == ESandState::Falling)
+    if (CurrentState == EFallingBlockState::Falling)
     {
         // 1. 计算下落位移
         FallVelocity = FMath::FInterpTo(FallVelocity, TerminalVelocity, DeltaTime, 0.5f);
@@ -41,7 +41,7 @@ void ASand::Tick(float DeltaTime)
     }
 }
 
-void ASand::BeginPlay()
+void AFallingBlock::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -49,9 +49,9 @@ void ASand::BeginPlay()
 }
 
 
-void ASand::CheckGravity(AActor* ActorToIgnore)
+void AFallingBlock::CheckGravity(AActor* ActorToIgnore)
 {
-    if (CurrentState == ESandState::Falling) return;
+    if (CurrentState == EFallingBlockState::Falling) return;
 
     FHitResult Hit;
     FVector Start = GetActorLocation();
@@ -70,9 +70,9 @@ void ASand::CheckGravity(AActor* ActorToIgnore)
     }
 }
 
-void ASand::StartFalling()
+void AFallingBlock::StartFalling()
 {
-    CurrentState = ESandState::Falling;
+    CurrentState = EFallingBlockState::Falling;
     FallVelocity = 0.0f;
     SetActorTickEnabled(true);
 
@@ -81,9 +81,9 @@ void ASand::StartFalling()
     NotifyBlocksToFall();
 }
 
-void ASand::StopFalling(float TargetZ)
+void AFallingBlock::StopFalling(float TargetZ)
 {
-    CurrentState = ESandState::Static;
+    CurrentState = EFallingBlockState::Static;
     FallVelocity = 0.0f;
     SetActorTickEnabled(false);
 

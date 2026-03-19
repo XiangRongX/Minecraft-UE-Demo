@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Interfaces/BlockHighlight.h"
+#include "Interfaces/Block.h"
 #include "BlockBase.generated.h"
 
 class UNiagaraSystem;
@@ -31,7 +31,7 @@ enum class EToolMaterial : uint8
 };
 
 UCLASS()
-class MINECRAFT_API ABlockBase : public AActor, public IBlockHighlight
+class MINECRAFT_API ABlockBase : public AActor, public IBlock
 {
 	GENERATED_BODY()
 	
